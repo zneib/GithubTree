@@ -1,0 +1,49 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  z-index: 0;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  position: relative;
+  border: 1px solid black;
+  z-index: 1;
+}
+
+#id {
+  margin-bottom: 10px;
+}
+
+/* Flex Container */
+.bottom {
+  display: flex;
+  margin: auto auto;
+  width: 50%;
+  padding: 10px;
+  justify-content: space-around;
+}
+
+/* Flex Item */
+#username {
+  font-size: 1.3em;
+  flex: 2;
+  margin-right: 10px;
+}
+
+/* Flex Item */
+#beginBtn {
+  font-size: 1.3em;
+  flex: 1;
+}
+
+.userNode {
+  width: 150px;
+  height: 50px;
+  border: 1px solid black;
+  position: absolute;
+  z-index: 2;
+}
