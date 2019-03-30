@@ -3,6 +3,7 @@
 }
 
 body {
+  font-family: 'Roboto', sans-serif;
   z-index: 0;
 }
 
@@ -52,6 +53,11 @@ canvas {
   width: 150px;
   height: 50px;
   border: 1px solid black;
+  border-radius: 10px;
   position: absolute;
+  padding: 5px;
+  font-size: 1.4em;
+  text-align: center;
+  vertical-align: middle;
   z-index: 2;
 }
