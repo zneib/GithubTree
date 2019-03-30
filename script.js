@@ -33,15 +33,15 @@ function drawUserNode(horizontal, vertical, login, name) {
   // horizontal = horizontal * .05;
   userNode.style.left = `${horizontal}px`;
   userNode.style.top = `${vertical}px`;
-  // if (canvas.getContext) {
-  //   let drawLine = canvas.getContext('2d');
-  //   drawLine.beginPath();
-  //   drawLine.moveTo(horizontal+100, vertical+15);
-  //   drawLine.lineTo(horizontal+150, vertical+15);
-  //   drawLine.closePath();
-  //   drawLine.strokeStyle = '#565656';
-  //   drawLine.stroke();
-  // }
+  if (canvas.getContext) {
+    let drawLine = canvas.getContext('2d');
+    drawLine.beginPath();
+    drawLine.moveTo(horizontal+25, vertical-8);
+    drawLine.lineTo(horizontal+25, vertical-48);
+    drawLine.closePath();
+    drawLine.strokeStyle = '#565656';
+    drawLine.stroke();
+  }
   const repoPromise = fetch(`https://api.github.com/users/${login}/repos`);
   repoPromise
     .then(data => data.json())
@@ -53,10 +53,10 @@ function drawUserNode(horizontal, vertical, login, name) {
 
 function setReposFromApi(horizontal, vertical, data) {
   const repos = data;
-  console.log(repos);
+  drawRepoNodes(horizontal, vertical, data);
 }
 
-function drawRepoNode(horizontal, vertical) {
+function drawRepoNode(horizontal, vertical, repos) {
   const div = document.createElement('div');
   div.className = 'node'
   const canvas = document.getElementById('treeCanvas');
