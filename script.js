@@ -65,7 +65,7 @@ function drawMiscUserInfo(horizontal, vertical, data) {
   drawUserInfoNodes(data.followers);
   function drawUserInfoNodes(info) {
     const div = document.createElement('div'); // Create a new node for each piece of user information.
-    div.className = 'node';
+    div.className = 'node userInfoNode';
     div.textContent = info;
     div.style.left = `${horizontal-170}px`;
     div.style.top = `${vertical-50}px`;
