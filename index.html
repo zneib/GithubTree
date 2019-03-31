@@ -9,11 +9,12 @@
   <title>Github Tree</title>
 </head>
 <body onload="setCanvasSize()">
-  <canvas id="treeCanvas"></canvas>
-  <div class="bottom">
-    <input id="username" type="text" placeholder="username">
-    <button id="beginBtn" onclick="beginTree()">Begin</button>
-  </div>
+    <div class="bottom">
+      <input id="username" type="text" placeholder="GitHub Username">
+      <button id="beginBtn" onclick="beginTree()">Begin</button>
+      <button id="resetBtn" onclick="resetTree()">Reset</button>
+    </div>
+    <canvas id="treeCanvas"></canvas>
   <script src="script.js"></script>
 </body>
 </html>

@@ -2,7 +2,13 @@ function setCanvasSize() {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   document.getElementById('treeCanvas').width = windowWidth - 100; // Set the Canvas size to better fit the window.
-  document.getElementById('treeCanvas').height = windowHeight - 200;
+  document.getElementById('treeCanvas').height = windowHeight - 100;
+}
+
+function resetTree() {
+  const canvas = document.getElementById('treeCanvas');
+  const context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function beginTree() {
@@ -18,28 +24,29 @@ function beginTree() {
 
 function setUserFromApi(data) {
   const horizontal = document.getElementById('treeCanvas').width / 2; // Set horizontal and vertical values to be used else where in the app.
-  const vertical = document.getElementById('treeCanvas').height * .9;
+  const vertical = document.getElementById('treeCanvas').height * .99;
   const { login, name } = data;
   drawUserNode(horizontal, vertical, login, name);
 }
 
 function drawUserNode(horizontal, vertical, login, name) {
   const div = document.createElement('div'); // Make the new user node to draw on the canvas.
+  div.id = 'userNode';
   div.className = 'node';
   div.textContent = name;
   const canvas = document.getElementById('treeCanvas');
   canvas.insertAdjacentElement('afterend', div);
-  const userNode = document.querySelector('.node');
-  // horizontal = horizontal * .05;
+  const userNode = document.getElementById('userNode');
   userNode.style.left = `${horizontal}px`;
   userNode.style.top = `${vertical}px`;
   if (canvas.getContext) {
     let drawLine = canvas.getContext('2d');
     drawLine.beginPath();
-    drawLine.moveTo(horizontal+25, vertical-8);
-    drawLine.lineTo(horizontal+25, vertical-48);
+    drawLine.lineWidth = 1.3;
+    drawLine.moveTo(horizontal+25, vertical-58);
+    drawLine.lineTo(horizontal+25, vertical-88);
     drawLine.closePath();
-    drawLine.strokeStyle = '#565656';
+    drawLine.strokeStyle = '#2E8E99';
     drawLine.stroke();
   }
   const repoPromise = fetch(`https://api.github.com/users/${login}/repos`);
@@ -53,11 +60,71 @@ function drawUserNode(horizontal, vertical, login, name) {
 
 function setReposFromApi(horizontal, vertical, data) {
   const repos = data;
-  drawRepoNodes(horizontal, vertical, data);
+  for (let index = 0; index <= 15; index++) {
+    if (index === 0) {
+      vetical = vertical + 200;
+    } else {
+      vertical = vertical - 50;
+    }
+    drawRepoNodes(horizontal, vertical, repos[index].name);
+    drawMiscRepoData(horizontal, vertical, repos[index].language);
+    drawMiscRepoData(horizontal+180, vertical, repos[index].size, true);
+  }
 }
 
-function drawRepoNode(horizontal, vertical, repos) {
+function drawRepoNodes(horizontal, vertical, repo) {
   const div = document.createElement('div');
-  div.className = 'node'
+  div.className = 'node';
+  div.textContent = repo;
+  div.style.left = `${horizontal}px`;
+  div.style.top = `${vertical-50}px`;
   const canvas = document.getElementById('treeCanvas');
+  canvas.insertAdjacentElement('afterend', div);
+  if (canvas.getContext) { // Draw lines on top of nodes
+    let drawLine = canvas.getContext('2d');
+    drawLine.beginPath();
+    drawLine.lineWidth = 1.3;
+    drawLine.moveTo(horizontal+25, vertical-58);
+    drawLine.lineTo(horizontal+25, vertical-88);
+    drawLine.closePath();
+    drawLine.strokeStyle = '#2E8E99';
+    drawLine.stroke();
+  }
+  drawRepoSide(horizontal, vertical);
+}
+
+function drawRepoSide(horizontal, vertical) {
+  const canvas = document.getElementById('treeCanvas');
+  if (canvas.getContext) { // Draw the line to the sides.
+    let drawLine = canvas.getContext('2d'); 
+    drawLine.beginPath();
+    drawLine.lineWidth = 1.3;
+    drawLine.moveTo(horizontal+100, vertical-90);
+    drawLine.lineTo(horizontal+130, vertical-90);
+    drawLine.closePath();
+    drawLine.strokeStyle = '#2E8E99';
+    drawLine.stroke();
+  }
+}
+
+function drawMiscRepoData(horizontal, vertical, repo, size = false) { // Draw the nodes for the language data.
+  const div = document.createElement('div');
+  if (size) {
+    div.className = 'node size';
+  } else {
+    div.className = 'node language';
+  }
+  if (size) {
+    div.textContent = repo + ' Bytes';
+  } else {
+    div.textContent = repo;
+  }
+  div.style.left = `${horizontal+180}px`;
+  div.style.top = `${vertical-50}px`;
+  const canvas = document.getElementById('treeCanvas');
+  canvas.insertAdjacentElement('afterend', div);
+  horizontal = horizontal + 180;
+  if (!size) {
+    drawRepoSide(horizontal, vertical);
+  }
 }

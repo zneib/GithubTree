@@ -2,17 +2,22 @@
   box-sizing: border-box;
 }
 
+html {
+  background-image: url(./images/topography.png);
+}
+
 body {
   font-family: 'Roboto', sans-serif;
-  z-index: 0;
 }
 
 canvas {
   display: block;
   margin: auto;
   position: relative;
+  background-color: #f3f3f3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
   border: 1px solid black;
-  z-index: 1;
+  overflow: hidden;
 }
 
 #id {
@@ -39,25 +44,49 @@ canvas {
 #beginBtn {
   font-size: 1.3em;
   flex: 1;
+  margin-right: 10px;
+}
+
+#resetBtn {
+  font-size: 1.3em;
+  flex: 1;
+}
+
+#userNode {
+  border-left: 5px solid red;
 }
 
 .userNode {
   width: 150px;
-  height: 50px;
+  height: 30px;
   border: 1px solid black;
+  border-left: 5px solid #2E8E99;
   position: absolute;
-  z-index: 2;
 }
 
 .node {
+  background-color: #fff;
+  box-shadow: 0 8px 6px -6px black;
   width: 150px;
-  height: 50px;
-  border: 1px solid black;
-  border-radius: 10px;
+  height: 30px;
+  border-left: 5px solid #2E8E99;
+  border-radius: 3px;
   position: absolute;
+  overflow: auto;
   padding-top: 8px;
-  font-size: 1.5em;
+  font-size: 0.8em;
   text-align: center;
   vertical-align: middle;
-  z-index: 2;
+}
+
+.language {
+  border-left: 5px solid #145E66;
+  background-color: rgb(207, 207, 207);
+  color: black;
+}
+
+.size {
+  border-left: 5px solid rgb(226, 205, 12);
+  background-color: rgb(116, 116, 116);
+  color: white;
 }
