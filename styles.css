@@ -79,6 +79,10 @@ canvas {
   vertical-align: middle;
 }
 
+.userInfoNode {
+  border-left: 5px solid red;
+}
+
 .language {
   border-left: 5px solid #145E66;
   background-color: rgb(207, 207, 207);

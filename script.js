@@ -25,15 +25,14 @@ function beginTree() {
 function setUserFromApi(data) {
   const horizontal = document.getElementById('treeCanvas').width / 2; // Set horizontal and vertical values to be used else where in the app.
   const vertical = document.getElementById('treeCanvas').height * .99;
-  const { login, name } = data;
-  drawUserNode(horizontal, vertical, login, name);
+  drawUserNode(horizontal, vertical, data);
 }
 
-function drawUserNode(horizontal, vertical, login, name) {
+function drawUserNode(horizontal, vertical, data) {
   const div = document.createElement('div'); // Make the new user node to draw on the canvas.
   div.id = 'userNode';
   div.className = 'node';
-  div.textContent = name;
+  div.textContent = data.name;
   const canvas = document.getElementById('treeCanvas');
   canvas.insertAdjacentElement('afterend', div);
   const userNode = document.getElementById('userNode');
@@ -49,13 +48,42 @@ function drawUserNode(horizontal, vertical, login, name) {
     drawLine.strokeStyle = '#2E8E99';
     drawLine.stroke();
   }
-  const repoPromise = fetch(`https://api.github.com/users/${login}/repos`);
+  drawMiscUserInfo(horizontal, vertical, data);
+  const repoPromise = fetch(`https://api.github.com/users/${data.login}/repos`);
   repoPromise
     .then(data => data.json())
     .then(data => { setReposFromApi(horizontal, vertical, data)})
     .catch((error) => {
       console.log(error);
     });
+}
+
+function drawMiscUserInfo(horizontal, vertical, data) {
+  drawUserInfoNodes(data.login);
+  drawUserInfoNodes(data.id);
+  drawUserInfoNodes(data.following);
+  drawUserInfoNodes(data.followers);
+  function drawUserInfoNodes(info) {
+    const div = document.createElement('div'); // Create a new node for each piece of user information.
+    div.className = 'node';
+    div.textContent = info;
+    div.style.left = `${horizontal-170}px`;
+    div.style.top = `${vertical-50}px`;
+    const canvas = document.getElementById('treeCanvas');
+    canvas.insertAdjacentElement('afterend', div);
+    if (canvas.getContext) {
+      let drawLine = canvas.getContext('2d');
+      drawLine.beginPath();
+      drawLine.lineWidth = 1.3;
+      drawLine.moveTo(horizontal-50, vertical-40);
+      drawLine.lineTo(horizontal-125, vertical-78);
+      drawLine.closePath();
+      drawLine.strokeStyle = 'red';
+      drawLine.stroke();
+      horizontal = horizontal - 170;
+      vertical = vertical - 50;
+    }
+  }
 }
 
 function setReposFromApi(horizontal, vertical, data) {
