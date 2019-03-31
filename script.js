@@ -9,6 +9,10 @@ function resetTree() {
   const canvas = document.getElementById('treeCanvas');
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
+  const nodes = document.querySelectorAll('.node');
+  nodes.forEach(node => {
+    node.parentNode.removeChild(node);
+  });
 }
 
 function beginTree() {
