@@ -17,7 +17,7 @@ function resetTree() { // Clear the canvas for another user input.
 
 }
 
-function beginTree() {
+function beginTree() { // Start by fetching the user name.
   const username = document.getElementById('username').value;
   const userPromise = fetch(`https://api.github.com/users/${username}`);
   userPromise
@@ -28,7 +28,7 @@ function beginTree() {
     });
 }
 
-function setUserFromApi(data) {
+function setUserFromApi(data) { // Setup the user information and get ready for drawing.
   const horizontal = document.getElementById('treeCanvas').width / 2; // Set horizontal and vertical values to be used else where in the app.
   const vertical = document.getElementById('treeCanvas').height * .99;
   drawUserNode(horizontal, vertical, data);
@@ -44,7 +44,7 @@ function drawUserNode(horizontal, vertical, data) {
   const userNode = document.getElementById('userNode');
   userNode.style.left = `${horizontal}px`;
   userNode.style.top = `${vertical}px`;
-  if (canvas.getContext) {
+  if (canvas.getContext) { // Draw the lines
     let drawLine = canvas.getContext('2d');
     drawLine.beginPath();
     drawLine.lineWidth = 1.3;
@@ -64,7 +64,7 @@ function drawUserNode(horizontal, vertical, data) {
     });
 }
 
-function drawMiscUserInfo(horizontal, vertical, data) {
+function drawMiscUserInfo(horizontal, vertical, data) { // Draw the other information about the github user.
   drawUserInfoNodes(data.login);
   drawUserInfoNodes(data.id);
   drawUserInfoNodes(data.following);
@@ -92,7 +92,7 @@ function drawMiscUserInfo(horizontal, vertical, data) {
   }
 }
 
-function setReposFromApi(horizontal, vertical, data) {
+function setReposFromApi(horizontal, vertical, data) { // Draw the repo information and lines.
   const repos = data;
   for (let index = 0; index <= 15; index++) {
     if (index === 0) {
