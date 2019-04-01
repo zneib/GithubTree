@@ -1,11 +1,11 @@
-function setCanvasSize() {
+function setCanvasSize() { // Set the canvas size when the document loads.
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   document.getElementById('treeCanvas').width = windowWidth - 100; // Set the Canvas size to better fit the window.
   document.getElementById('treeCanvas').height = windowHeight - 100;
 }
 
-function resetTree() {
+function resetTree() { // Clear the canvas for another user input.
   const canvas = document.getElementById('treeCanvas');
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -13,6 +13,8 @@ function resetTree() {
   nodes.forEach(node => {
     node.parentNode.removeChild(node);
   });
+  document.getElementById('username').value = '';
+
 }
 
 function beginTree() {
